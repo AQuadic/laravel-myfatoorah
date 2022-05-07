@@ -23,18 +23,81 @@ class MyFatoorah extends Service
         try {
             $this->endpoint = 'SendPayment';
 
-            /** @var Illuminate\Http\Client\Response $response  */
+            /** @var Illuminate\Http\Client\Response $response */
 
             $response = $this->getClient()->post($this->getFullUrl(), $data);
-          
-        } catch(\Exception $exception) {
+
+        } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
 
         throw_unless(
-                $response->successful(),
-                $response->throw()
-            );
+            $response->successful(),
+            $response->throw()
+        );
+
+        return $response->json();
+    }
+
+    public function registerApplePayDomain($data = [])
+    {
+        try {
+            $this->endpoint = 'RegisterApplePayDomain';
+
+            /** @var Illuminate\Http\Client\Response $response */
+
+            $response = $this->getClient()->post($this->getFullUrl(), $data);
+
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
+        }
+
+        throw_unless(
+            $response->successful(),
+            $response->throw()
+        );
+
+        return $response->json();
+    }
+
+    public function initiateSession($data = [])
+    {
+        try {
+            $this->endpoint = 'InitiateSession';
+
+            /** @var Illuminate\Http\Client\Response $response */
+
+            $response = $this->getClient()->post($this->getFullUrl(), $data);
+
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
+        }
+
+        throw_unless(
+            $response->successful(),
+            $response->throw()
+        );
+
+        return $response->json();
+    }
+
+    public function executePayment($data = [])
+    {
+        try {
+            $this->endpoint = 'ExecutePayment';
+
+            /** @var Illuminate\Http\Client\Response $response */
+
+            $response = $this->getClient()->post($this->getFullUrl(), $data);
+
+        } catch (\Exception $exception) {
+            throw new \Exception($exception->getMessage());
+        }
+
+        throw_unless(
+            $response->successful(),
+            $response->throw()
+        );
 
         return $response->json();
     }
@@ -55,7 +118,7 @@ class MyFatoorah extends Service
                 'KeyType' => 'PaymentId',
                 'Key' => $payment_id,
             ]);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
 
@@ -67,7 +130,8 @@ class MyFatoorah extends Service
      *
      * @return mixed
      */
-    public function get() {
+    public function get()
+    {
         return $this->payment ? $this->payment->json() : null;
     }
 
